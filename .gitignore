@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Conda / virtual environments
+venv/
+.venv/
+env/
+.conda/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Dataset files
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Model checkpoints
+checkpoints/*
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Generated results
+reports/figures/*
+reports/results/*
+!reports/figures/.gitkeep
+!reports/results/.gitkeep
+runs/
+logs/
+*.log
+
+# Secrets
+.env
+.env.*
+
+# IDE and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Python testing and cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/

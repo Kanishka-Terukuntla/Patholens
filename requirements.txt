@@ -1,0 +1,15 @@
+medmnist
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+Pillow
+opencv-python
+tqdm
+jupyter
+ipykernel
+streamlit
+grad-cam
+tensorboard
+monai
