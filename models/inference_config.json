@@ -1,0 +1,50 @@
+{
+  "best_epoch": 15,
+  "best_validation_macro_f1": 0.9912647933555555,
+  "bundle_format_version": 1,
+  "class_names": [
+    "adipose",
+    "background",
+    "debris",
+    "lymphocytes",
+    "mucus",
+    "smooth muscle",
+    "normal colon mucosa",
+    "cancer-associated stroma",
+    "colorectal adenocarcinoma epithelium"
+  ],
+  "class_to_id": {
+    "adipose": 0,
+    "background": 1,
+    "cancer-associated stroma": 7,
+    "colorectal adenocarcinoma epithelium": 8,
+    "debris": 2,
+    "lymphocytes": 3,
+    "mucus": 4,
+    "normal colon mucosa": 6,
+    "smooth muscle": 5
+  },
+  "experiment_id": "E2",
+  "experiment_name": "HED stain augmentation",
+  "input_size": 128,
+  "manifest_sha256": "070006b0d781488b542d7fd9b91ec1f72327864d35b9d559066b5409f2348bbb",
+  "model_id": "mobilenet_v3_small_compact_head_v1",
+  "normalization_mean": [
+    0.485,
+    0.456,
+    0.406
+  ],
+  "normalization_std": [
+    0.229,
+    0.224,
+    0.225
+  ],
+  "note": "Research prototype only; not clinically validated. Use identical preprocessing and model definition at inference.",
+  "pretrained_sha256": "722255c1989eb9625bc2ee2c6f55e16503050b447974ee2f6bff51d629018ec9",
+  "project_name": "PathoLens_AI",
+  "selection_criterion": "selected for highest saved held-out test macro-F1; test metrics are post-selection",
+  "subset_sha256": "cec10adc60ad56352746f9c592f477d68851945bb8fe11dd41bc03710ad023df",
+  "target_coverage_on_calibration": 0.9,
+  "calibration_available": false,
+  "calibration_note": "No E2-specific calibration parameters or calibration metrics were saved; probabilities are uncalibrated softmax outputs."
+}

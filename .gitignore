@@ -1,0 +1,19 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Local environments and editor settings
+.venv/
+venv/
+.env/
+.idea/
+.vscode/
+
+# Streamlit local state
+.streamlit/secrets.toml
+
+# Notebook runtime state
+.ipynb_checkpoints/
+
+/data
