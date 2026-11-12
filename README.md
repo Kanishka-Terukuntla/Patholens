@@ -1,68 +1,86 @@
 # PathoLens AI
 
-Self-contained Streamlit research prototype for nine-class colorectal histopathology classification using the **50% PathMNIST pilot run**. The app packages E2 (HED stain augmentation), the strongest model on the saved test comparison, with class probabilities, Grad-CAM, and approximate activation-region boxes.
+### Explore colorectal histopathology classification with visual explanations
 
-The Streamlit interface uses a dark color theme throughout, including its saved-result charts and prediction views.
+PathoLens AI is a Streamlit research prototype for classifying colorectal histopathology images into nine tissue classes. It pairs an image classifier with class probabilities and Grad-CAM visualizations to make model outputs easier to inspect.
 
-## Features
+> **Research prototype only.** PathoLens AI is not clinically validated and must not be used to diagnose or guide patient care.
 
-- Five pages: overview, methodology, saved results, prediction, explainability.
-- Packaged E2 MobileNetV3-Small checkpoint and inference configuration.
-- Copies of the 50% run's sampled train and test image, label, and index arrays.
-- JPG/JPEG/PNG upload, nine-class raw softmax probabilities and confidence.
-- Separate original, heatmap, and original-with-boxes outputs.
-- Interactive Grad-CAM activation threshold for filtering approximate regions without rerunning inference.
-- Saved metrics and figures for all four 50% experiments.
+## At a glance
 
-## Project map
-
-| Folder or file | Purpose |
+| | |
 |---|---|
-| `app.py` | Streamlit home page and application styling |
-| `pages/` | Five user-facing pages |
-| `src/` | Model loading, preprocessing, prediction, Grad-CAM, boxes, charts, and saved-result readers |
-| `models/` | E2 checkpoint, inference configuration, and model notes |
-| `data/` | Full raw archive plus sampled 50% train/validation/test splits and provenance |
-| `reports/` | Experiment report and saved CSV metrics |
-| `assets/` | Saved experiment figures |
-| `notebooks/` | New inference and explainability notebook |
-| `requirements.txt` | Python dependencies |
+| **Task** | Nine-class colorectal histopathology image classification |
+| **Dataset** | PathMNIST (MedMNIST), 50% pilot run |
+| **App** | Streamlit |
+| **Selected model** | E2 MobileNetV3-Small with HED stain augmentation |
+| **Explanations** | Grad-CAM heatmap and approximate activation regions |
 
-The standalone guide at `docs/PathoLens_Project_Flowchart.html` is optional. When it exists, the app adds a **Project Flowchart** menu page that displays it. Removing the HTML file removes that menu entry; the app's other routes do not depend on the guide.
+## What you can do
 
-## Selected model and evaluation caveat
+- Explore the project overview, methodology, saved experiment results, predictions, and explanations.
+- Upload a JPG, JPEG, or PNG image and view the predicted class with probabilities for all nine classes.
+- Compare the source image with its Grad-CAM heatmap and an overlay showing approximate high-activation regions.
+- Adjust the activation threshold to filter displayed regions without rerunning inference.
+- Review saved metrics and figures for the four pilot experiments.
 
-E2 test accuracy was 0.964345 and macro-F1 0.952221 on 3,590 pilot test images. E1 had the highest validation-selection macro-F1 (0.994599 versus E2's 0.991265). This app selects E2 based on the test comparison, so those test results are post-selection and are not an unbiased final estimate. Evaluate on new untouched data for an independent estimate. See `reports/experiment_comparison.md`.
+## Preview with sample images
 
-No E2-specific calibration or selective-prediction metrics were saved. Confidence and probabilities in the app are uncalibrated softmax outputs; E1 calibration values are not applied to E2.
+Use one of the PNGs in [`samples/`](samples/) to try the prediction page. The folder contains one labeled image from each class in the pilot test subset.
 
-## Install and launch
+## Get started
 
-Create and activate a Python 3.10+ environment. Install `requirements.txt` into that active environment; it includes the app's image, model, chart, and data libraries, plus Jupyter support for the included notebook:
+Use Python 3.10 or newer. From this folder, create and activate a virtual environment, then install the project dependencies:
 
 ```bash
+python -m venv .venv
+```
+
+On Windows PowerShell:
+
+```powershell
+.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 ```
 
-Then, still in the same environment and from this folder, launch the app:
+Launch the app:
 
 ```bash
 python -m streamlit run app.py
 ```
 
-Installing the requirements downloads Python packages only. The model checkpoint and dataset are already included in this project folder; they are not downloaded by `requirements.txt`.
+Streamlit will print a local URL to open in your browser. Run the command from the project folder so the app can find its model, reports, assets, and samples.
 
-## Image prediction
+## Repository contents
 
-Open **4 Image Prediction**, upload JPG/JPEG/PNG, and review the predicted class and nine-class probability chart. Output A displays the RGB source, Output B the separate red-scale Grad-CAM map, and Output C a fresh copy of the source with retained activation boxes. The activation threshold slider filters regions from the already-computed map; it does not rerun model inference. This is a normalized Grad-CAM activation cutoff, not a per-box confidence threshold: the classifier produces one confidence score for the whole image, not confidence scores for individual regions. If no meaningful region passes the filters, no box is drawn.
+| Path | Description |
+|---|---|
+| `app.py` | Streamlit home page and shared styling |
+| `pages/` | App pages for methodology, results, prediction, and explainability |
+| `src/` | Model loading, preprocessing, inference, Grad-CAM, and result utilities |
+| `models/` | Model checkpoint and inference configuration |
+| `reports/` | Experiment comparison and saved metrics |
+| `assets/` | Saved experiment figures |
+| `samples/` | Small example images for trying predictions |
+| `notebooks/` | Inference and explainability notebook |
+| `data/` | Local dataset files; excluded from Git because of their size |
+| `docs/` | Optional project flowchart shown in the app when present |
 
-The full local PathMNIST-128 archive and all three sampled 50% splits are included under `data/` with metadata and provenance for future work. The app uses the E2 checkpoint trained on the 50% run; prediction does not need to load dataset arrays.
+The PathMNIST dataset is available from [MedMNIST](https://medmnist.com/). Dataset files are intentionally excluded from this repository to keep GitHub uploads small. The application uses the packaged model for prediction and does not need the training arrays at runtime.
 
-## Limitations
+## Model and evaluation
 
-Grad-CAM boxes are approximate class-associated activation regions, not detections, lesion annotations, or segmentation masks. This is not a diagnostic service. Results are from a 50% pilot subset, not the full PathMNIST benchmark; patient/slide independence is not established. Test metrics were used to select E2 for the app and are post-selection. No E2 calibration results are available.
+The app packages E2, the MobileNetV3-Small experiment with HED stain augmentation. On 3,590 pilot test images, E2 recorded accuracy of **0.964345** and macro-F1 of **0.952221**. E1 had the strongest validation-selection macro-F1 (**0.994599**, compared with E2's **0.991265**).
 
-## Sample images
+E2 was selected after comparing test results, so its reported test metrics are post-selection and should not be treated as an unbiased final estimate. Evaluate on a new, untouched dataset for an independent estimate. See [`reports/experiment_comparison.md`](reports/experiment_comparison.md) for the experiment details.
 
-Upload any PNG in samples/ to quickly exercise the prediction page. The folder contains one labeled image from each class in the bundled 50% PathMNIST test subset. These PNGs were exported from the packaged arrays without changing pixel values. The underlying dataset is distributed by MedMNIST under CC BY 4.0; see [the official MedMNIST data page](https://github.com/MedMNIST/MedMNIST#data-files).
+The displayed probabilities are raw, uncalibrated softmax outputs. No E2-specific calibration or selective-prediction metrics were saved; E1 calibration results are not applied to E2.
 
+## Interpreting Grad-CAM
+
+Grad-CAM highlights image regions associated with the model's prediction. The outlined regions are approximate activation areas, not object detections, lesion annotations, or segmentation masks. The threshold slider filters the normalized activation map; it is not a confidence score for individual regions. The classifier produces one confidence score for the full image.
+
+## License and dataset attribution
+
+See [`LICENSE`](LICENSE) for this project's license. PathMNIST is distributed by MedMNIST under [CC BY 4.0](https://github.com/MedMNIST/MedMNIST#data-files); refer to the official dataset page for its terms and citation guidance.
