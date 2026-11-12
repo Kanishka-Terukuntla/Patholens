@@ -2,18 +2,50 @@
 __pycache__/
 *.py[cod]
 *.pyo
+*.egg-info/
+build/
+dist/
 
 # Local environments and editor settings
 .venv/
 venv/
-.env/
+env/
+.conda/
 .idea/
 .vscode/
 
-# Streamlit local state
+# Streamlit local state and secrets
 .streamlit/secrets.toml
+.env
+.env.*
 
 # Notebook runtime state
 .ipynb_checkpoints/
 
-/data
+# Model checkpoints
+checkpoints/*
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Generated results (keep folder placeholders)
+reports/figures/*
+!reports/figures/.gitkeep
+reports/results/*
+!reports/results/.gitkeep
+runs/
+logs/
+*.log
+
+# Python testing and cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
